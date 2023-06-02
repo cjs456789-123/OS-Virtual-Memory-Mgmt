@@ -8,7 +8,7 @@ def MINalgorithm(n, m, k, array):
     # MIN algorithm
     memory_state = []
     page_fault = 0
-    page_fault_list = [0] * k
+    page_fault_list = [None] * k
     
     
     for i in range(k):
@@ -16,7 +16,7 @@ def MINalgorithm(n, m, k, array):
         if len(memory_state) < m:
             if array[i] not in memory_state:
                 memory_state.append(array[i])
-                page_fault_list[i] = 1
+                page_fault_list[i] = bool(True)
                 page_fault += 1
         else:
             if array[i] not in memory_state:
@@ -31,10 +31,15 @@ def MINalgorithm(n, m, k, array):
                     replace = min([x for x in memory_state if x not in replace_page])
                     memory_state[memory_state.index(replace)] = array[i]
                 
-                page_fault_list[i] = 1
+                page_fault_list[i] = bool(True)
                 page_fault += 1
+        
+        if i==0:
+            print("메모리 상태 변화 과정 (page fault 발생 위치 표시)")
+            print()
+        print("{}번째".format(i))
+        print("Memory_state: {}".format(memory_state))
+        print("page fault: {}".format(page_fault_list[i]))
+        print()
     
-    
-    
-    
-    return print("총 page fault 횟수: {}\n메모리 상태 변화 과정: {}".format(page_fault, page_fault_list))
+    return print("총 page fault 횟수: {}".format(page_fault))

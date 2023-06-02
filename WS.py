@@ -7,13 +7,16 @@
 def WSalgorithm(n, w, k, array):    
     memory_state = [] # 초기 할당된 page frame들은 모두 비어 있는 것으로 가정 (요구 명세서에서 명시됨)
     page_fault = 0
-    page_fault_list = [0] * k
+    page_fault_list = [None] * k
     timestamp = []      # window size에 포함된 reference 저장
     
     for i in range(k):
         p_ws, q_ws = None, None # 들어온 페이지, 나간 페이지
         num_frames_allocated = 0 # 할당된 page frame 개수
         
+        if i==0:
+            print("메모리 상태 변화 과정 (page fault 발생 위치 표시)")
+            print()
         print("{}번째:".format(i))
         
         # reference 일단 기록 (중복 허용)
@@ -29,9 +32,9 @@ def WSalgorithm(n, w, k, array):
             memory_state.append(p_ws)
             # page fault 기록           
             page_fault += 1
-            page_fault_list[i] = 1
+            page_fault_list[i] = bool(True)
         
-        print("Memory_state: {}".format(memory_state))
+        # print("Memory_state: {}".format(memory_state))
         
         # 나간 페이지 반영: 이전 reference vs 현재 reference
         previous_ref = timestamp[max(0, i-w-1) : max(0, i-1)]
@@ -53,4 +56,4 @@ def WSalgorithm(n, w, k, array):
         
 
         
-    return print("총 page fault 횟수: {}\n메모리 상태 변화 과정: {}".format(page_fault, page_fault_list))
+    return print("총 page fault 횟수: {}".format(page_fault))
